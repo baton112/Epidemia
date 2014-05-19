@@ -1,0 +1,15 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="epidemia.MainWindow"
+        Title="MainWindow" Height="514" Width="751">
+    <Grid>
+        <Label Content="Wielkosc Populacji" HorizontalAlignment="Left" Margin="471,17,0,0" VerticalAlignment="Top" Height="34" Width="151"/>
+        <Button Content="Stworz poulacje" HorizontalAlignment="Left" Margin="486,51,0,0" VerticalAlignment="Top" Width="136" Click="Button_Click"/>
+        <TextBox Name="PopSize" HorizontalAlignment="Left" Height="23" Margin="589,21,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144"/>
+        <StatusBar HorizontalAlignment="Left" Height="29" Margin="10,444,0,0" VerticalAlignment="Top" Width="723" RenderTransformOrigin="0.506,1.04">
+            <StatusBarItem Name="StatBarItem" Content="StatusBarItem" Height="29" VerticalAlignment="Top"/>
+        </StatusBar>
+
+    </Grid>
+</Window>
