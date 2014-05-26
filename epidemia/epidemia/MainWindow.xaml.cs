@@ -48,5 +48,13 @@ namespace epidemia
                 StatBarItem.Content = "Błedny format wielkości populacji";
             };
         }
+
+        //epoka
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.people.move();
+            StatBarItem.Content = "Przesunieto";
+            this.people.rysujPopulacje(canvas);
+        }
     }
 }

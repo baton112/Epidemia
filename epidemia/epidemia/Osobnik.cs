@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 namespace epidemia
 {
     enum state { zdrowy, chory, wyzdrowial, martwy };
+    enum direction { up, down, left, right};
 
     public class Osobnik
     {
@@ -66,6 +67,24 @@ namespace epidemia
             Canvas.SetLeft(rect, startPoint.X);
             Canvas.SetTop(rect, startPoint.Y);
             c.Children.Add(rect);
+        }
+        public void move(int rand)
+        {
+            switch(rand)
+            {
+                case 0:
+                    this.position.X++;
+                    break;
+                case 1:
+                    this.position.X--;
+                    break;
+                case 2:
+                    this.position.Y++;
+                    break;
+                case 3:
+                    this.position.Y--;
+                    break;
+            }
         }
 
 

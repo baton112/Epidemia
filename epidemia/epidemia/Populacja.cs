@@ -12,7 +12,6 @@ namespace epidemia
         private List<Osobnik> curretPopulation;
         public int alive;
 
-
         public populacja(int size)
         {
             curretPopulation = new List<Osobnik>();
@@ -38,6 +37,15 @@ namespace epidemia
             for(int i = 0; i < alive; i++)
             {
                 curretPopulation.ElementAt(i).wyswietl(c);
+            }
+        }
+        public void move()
+        {
+            Random r = new Random();
+            for(int i = 0; i < alive ; i++)
+            {
+                int direc = r.Next(4);
+                curretPopulation.ElementAt(i).move(direc);
             }
         }
 
