@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace epidemia
 {
     /// <summary>
@@ -20,6 +21,9 @@ namespace epidemia
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int osobnikSize = 2; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
+        public static int canvasSizeX = 400; // rozmiar canvas X
+        public static int canvasSizeY = 400; // rozmiar canvas Y
   
         public MainWindow()
         {
@@ -32,16 +36,17 @@ namespace epidemia
         //Tworzenie populacji button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try{
+            try
+            {
                 popSize = Convert.ToInt32(PopSize.Text);
                 people = new populacja(popSize);
                 StatBarItem.Content = "Stworzono populacje";
+                people.rysujPopulacje(canvas);
             }
             catch(FormatException)
             {
                 StatBarItem.Content = "Błedny format wielkości populacji";
-            }
+            };
         }
-
     }
 }

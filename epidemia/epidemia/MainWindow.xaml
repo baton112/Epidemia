@@ -10,6 +10,7 @@
         <StatusBar HorizontalAlignment="Left" Height="29" Margin="10,444,0,0" VerticalAlignment="Top" Width="723" RenderTransformOrigin="0.506,1.04">
             <StatusBarItem Name="StatBarItem" Content="StatusBarItem" Height="29" VerticalAlignment="Top"/>
         </StatusBar>
+        <Canvas Name="canvas" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="400" Margin="10,10,0,0"/>
 
     </Grid>
 </Window>
