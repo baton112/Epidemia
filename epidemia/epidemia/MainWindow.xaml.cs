@@ -21,7 +21,6 @@ namespace epidemia
     public partial class MainWindow : Window
     {
   
-
         public MainWindow()
         {
             InitializeComponent();
@@ -30,62 +29,19 @@ namespace epidemia
         int popSize;
         populacja people;
 
-        //start button
+        //Tworzenie populacji button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            popSize = Convert.ToInt32(PopSize.Text);
-            people = new populacja(popSize);
-            StatBarItem.Content = "Stworzono populacje";
-        }
-        
-
-    }
-    enum state { zdrowy, chory, wyzdrowial, martwy };
-    public class osobnik
-    {
-        state condition;
-        Vector position;
-
-        public osobnik(int x, int y)
-        {
-            this.condition = state.zdrowy;
-            this.position.X = x;
-            this.position.Y = y;
-        }
-        public osobnik() { }
-        public Boolean isSick()
-        {
-            if (condition == state.chory)
-            {
-                return true;
+            try{
+                popSize = Convert.ToInt32(PopSize.Text);
+                people = new populacja(popSize);
+                StatBarItem.Content = "Stworzono populacje";
             }
-            else return false;
-        }
-        public Boolean canGetSic()
-        {
-            if (condition == state.zdrowy )
+            catch(FormatException)
             {
-                return true;
-            }
-            else return false;
-        }
-    }
-
-    public class populacja
-    {
-        private List<osobnik> curretPopulation;
-        public int alive;
-
-        public populacja(int size)
-        {
-            curretPopulation = new List<osobnik>();
-            this.alive = size;
-            for (int i = 0; i < alive; i++)
-            {
-                curretPopulation.Add(new osobnik(0, 0));
+                StatBarItem.Content = "Błedny format wielkości populacji";
             }
         }
 
     }
-
 }
