@@ -67,10 +67,9 @@ namespace epidemia
                 n = Convert.ToInt32(epochNumber.Text);
                 for (int i = 0; i < n; i++)
                 {
-                    this.people.move();
+                    this.people.moveCanvasChilds(canvas);
                 }
                 StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
-                people.rysujPopulacje(canvas);
             }
             catch (FormatException)
             {

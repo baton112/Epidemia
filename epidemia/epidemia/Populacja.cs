@@ -40,15 +40,6 @@ namespace epidemia
                 curretPopulation[i].wyswietl(c);
             }
         }
-        public void move()
-        {
-            Random r = new Random();
-            for(int i = 0; i < alive ; i++)
-            {
-                int direc = r.Next(4);
-                curretPopulation[i].move(direc);
-            }
-        }
 
         public void moveCanvasChilds(Canvas c)
         {

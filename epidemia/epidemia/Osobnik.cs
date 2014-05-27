@@ -92,7 +92,6 @@ namespace epidemia
             this.move(rand);         
             Rectangle rectangle; 
             rectangle = (Rectangle)c.Children[index];
-            if (index == -1) return;
             Canvas.SetTop(rectangle, this.position.Y);
             Canvas.SetLeft(rectangle, this.position.X);
         }
