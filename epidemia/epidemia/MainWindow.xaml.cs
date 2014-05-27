@@ -18,6 +18,8 @@ namespace epidemia
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// popSiza - wielkosc populacji tworzonej na start 
+    /// epochNumber --- okienko z ilosca epok do symulowania po nacisnieciu klawiasza 
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -49,12 +51,31 @@ namespace epidemia
             };
         }
 
-        //epoka
+        //przesuwa dzieci na kanvasie ---- jedna epoka 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.people.move();
-            StatBarItem.Content = "Przesunieto";
-            this.people.rysujPopulacje(canvas);
+            this.people.moveCanvasChilds(canvas);
+            StatBarItem.Content = "Przesunieto";           
+        }
+
+        // Symuluje kilka epok nadchodzacych po sobie 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            int n = 0;
+            try
+            {
+                n = Convert.ToInt32(epochNumber.Text);
+                for (int i = 0; i < n; i++)
+                {
+                    this.people.move();
+                }
+                StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
+                people.rysujPopulacje(canvas);
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Błedny rozmiar symulacji epok";
+            };
         }
     }
 }

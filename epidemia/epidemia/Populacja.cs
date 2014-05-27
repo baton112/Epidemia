@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace epidemia
 {
@@ -36,7 +37,7 @@ namespace epidemia
             c.Children.Clear();
             for(int i = 0; i < alive; i++)
             {
-                curretPopulation.ElementAt(i).wyswietl(c);
+                curretPopulation[i].wyswietl(c);
             }
         }
         public void move()
@@ -45,9 +46,22 @@ namespace epidemia
             for(int i = 0; i < alive ; i++)
             {
                 int direc = r.Next(4);
-                curretPopulation.ElementAt(i).move(direc);
+                curretPopulation[i].move(direc);
             }
         }
+
+        public void moveCanvasChilds(Canvas c)
+        {
+            //c.Children.Clear();
+            Random r = new Random();
+            for (int i = 0; i < alive; i++)
+            {
+                int direc = r.Next(4);
+                 curretPopulation[i].moveCanvasChilds(c, i, direc);
+            }
+
+        }
+
 
     }
 }

@@ -68,6 +68,7 @@ namespace epidemia
             Canvas.SetTop(rect, startPoint.Y);
             c.Children.Add(rect);
         }
+
         public void move(int rand)
         {
             switch(rand)
@@ -85,6 +86,15 @@ namespace epidemia
                     this.position.Y--;
                     break;
             }
+        }
+        public void moveCanvasChilds(Canvas c, int index, int rand)
+        {
+            this.move(rand);         
+            Rectangle rectangle; 
+            rectangle = (Rectangle)c.Children[index];
+            if (index == -1) return;
+            Canvas.SetTop(rectangle, this.position.Y);
+            Canvas.SetLeft(rectangle, this.position.X);
         }
 
 

@@ -6,12 +6,14 @@
     <Grid>
         <Label Content="Wielkosc Populacji" HorizontalAlignment="Left" Margin="471,17,0,0" VerticalAlignment="Top" Height="34" Width="151"/>
         <Button Content="Stworz poulacje" HorizontalAlignment="Left" Margin="486,51,0,0" VerticalAlignment="Top" Width="136" Click="Button_Click"/>
-        <TextBox Name="PopSize" HorizontalAlignment="Left" Height="23" Margin="589,21,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144"/>
+        <TextBox Name="PopSize" HorizontalAlignment="Left" Height="23" Margin="589,21,0,0" TextWrapping="Wrap" Text="Wielkosc populacji" VerticalAlignment="Top" Width="144"/>
         <StatusBar HorizontalAlignment="Left" Height="29" Margin="10,444,0,0" VerticalAlignment="Top" Width="723" RenderTransformOrigin="0.506,1.04">
             <StatusBarItem Name="StatBarItem" Content="StatusBarItem" Height="29" VerticalAlignment="Top"/>
         </StatusBar>
         <Canvas Name="canvas" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="400" Margin="10,10,0,0"/>
-        <Button Content="Epoka" HorizontalAlignment="Left" Margin="622,113,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button Content="Jedna epoka " HorizontalAlignment="Left" Margin="486,87,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click_1"/>
+        <Button Content="Symuluj epoko" HorizontalAlignment="Left" Margin="601,127,0,0" VerticalAlignment="Top" Width="108" Click="Button_Click_2"/>
+        <TextBox Name="epochNumber" HorizontalAlignment="Left" Height="20" Margin="486,127,0,0" TextWrapping="Wrap" Text="Ile epok" VerticalAlignment="Top" Width="98"/>
 
     </Grid>
 </Window>
