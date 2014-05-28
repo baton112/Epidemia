@@ -76,16 +76,20 @@ namespace epidemia
             switch (this.direction)
             {
                 case Direction.right:
-                    this.position.X++;
+                    if(this.position.X+1 < MainWindow.canvasSizeX)
+                        this.position.X++;
                     break;
                 case Direction.left:
-                    this.position.X--;
+                    if (this.position.X -1 >= 0)
+                        this.position.X--;
                     break;
                 case Direction.down:
-                    this.position.Y++;
+                    if (this.position.Y + 1 < MainWindow.canvasSizeY)
+                        this.position.Y++;
                     break;
                 case Direction.up:
-                    this.position.Y--;
+                    if (this.position.Y- 1 >= 0)
+                        this.position.Y--;
                     break;
             }
         }
