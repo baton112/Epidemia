@@ -11,25 +11,27 @@ using System.Windows.Shapes;
 
 namespace epidemia
 {
-    enum state { zdrowy, chory, wyzdrowial, martwy };
-    enum direction { up, down, left, right};
+    public enum State { zdrowy, chory, wyzdrowial, martwy };
+    public enum Direction { up, down, left, right};
 
     public class Osobnik
     {
-        state condition;
+        private State condition;
         Point position;
+        public Direction direction;
 
         public Osobnik() { }
-        public Osobnik(int x, int y)
+        public Osobnik(int x, int y, int rand)
         {
-            this.condition = state.zdrowy;
+            this.condition = State.zdrowy;
             this.position.X = x;
             this.position.Y = y;
+            this.direction = (Direction) rand;
         }
         
         public Boolean isSick()
         {
-            if (condition == state.chory)
+            if (condition == State.chory)
             {
                 return true;
             }
@@ -37,7 +39,7 @@ namespace epidemia
         }
         public Boolean canGetSic()
         {
-            if (condition == state.zdrowy)
+            if (condition == State.zdrowy)
             {
                 return true;
             }
@@ -48,7 +50,7 @@ namespace epidemia
             Point startPoint ;
             Rectangle rect;
             startPoint = new Point(this.position.X, this.position.Y);
-            if(this.condition == state.zdrowy)
+            if(this.condition == State.zdrowy)
             {
                 rect = new Rectangle
                 {
@@ -69,27 +71,32 @@ namespace epidemia
             c.Children.Add(rect);
         }
 
-        public void move(int rand)
+        public void move()
         {
-            switch(rand)
+            switch (this.direction)
             {
-                case 0:
+                case Direction.right:
                     this.position.X++;
                     break;
-                case 1:
+                case Direction.left:
                     this.position.X--;
                     break;
-                case 2:
+                case Direction.down:
                     this.position.Y++;
                     break;
-                case 3:
+                case Direction.up:
                     this.position.Y--;
                     break;
             }
         }
-        public void moveCanvasChilds(Canvas c, int index, int rand)
+
+        public void changeDirection(Direction d)
         {
-            this.move(rand);         
+            this.direction = d;
+        }
+        public void moveCanvasChilds(Canvas c, int index)
+        {
+            this.move();         
             Rectangle rectangle; 
             rectangle = (Rectangle)c.Children[index];
             Canvas.SetTop(rectangle, this.position.Y);

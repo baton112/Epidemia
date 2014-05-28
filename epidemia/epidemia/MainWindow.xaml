@@ -24,6 +24,8 @@
         <Label Name="deathNumber" Content="Label" HorizontalAlignment="Left" Margin="589,402,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Content="Zyje" HorizontalAlignment="Left" Margin="486,309,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Name="aliveNumber" Content="Label" HorizontalAlignment="Left" Margin="589,309,0,0" VerticalAlignment="Top" Width="107"/>
-
+        <CheckBox Name="checkBox" Margin="486,227,34,233" RenderTransformOrigin="1.511,0.462" Content="Utrzymuj kierunek przemieszczania" Checked="checkBox_Checked" Unchecked="checkBox_Checked" IsChecked="False" IsThreeState="False"/>
+        <Label Content="Szansa zmiany kierunku" HorizontalAlignment="Left" Margin="486,255,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="changeDirectionChance" HorizontalAlignment="Left" Height="23" Margin="637,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Text="0,5" TextChanged="changeDirectionChance_TextChanged"/>
     </Grid>
 </Window>

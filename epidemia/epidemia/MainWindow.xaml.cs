@@ -16,11 +16,6 @@ using System.Windows.Shapes;
 
 namespace epidemia
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// popSiza - wielkosc populacji tworzonej na start 
-    /// epochNumber --- okienko z ilosca epok do symulowania po nacisnieciu klawiasza 
-    /// </summary>
     public partial class MainWindow : Window
     {
         public static int osobnikSize = 2; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
@@ -43,10 +38,12 @@ namespace epidemia
                 double chance;
                 chance = Convert.ToDouble(infectChance.Text);
                 popSize = Convert.ToInt32(PopSize.Text);
-                people = new populacja(popSize, chance);
+                people = new populacja(popSize, chance, (bool)checkBox.IsChecked);
                 StatBarItem.Content = "Stworzono populacje";
                 people.rysujPopulacje(canvas);
                 updatePopulationNumers();
+                people.changeMoveMethod((bool)checkBox.IsChecked);
+                people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
             }
             catch(FormatException)
             {
@@ -58,7 +55,8 @@ namespace epidemia
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.people.moveCanvasChilds(canvas);
-            StatBarItem.Content = "Przesunieto";           
+            StatBarItem.Content = "Przesunieto";
+            updatePopulationNumers();
         }
 
         // Symuluje kilka epok nadchodzacych po sobie 
@@ -78,6 +76,7 @@ namespace epidemia
             {
                 StatBarItem.Content = "Błedny rozmiar symulacji epok";
             };
+            updatePopulationNumers();
         }
 
         public void updatePopulationNumers()
@@ -87,7 +86,29 @@ namespace epidemia
             healthyNumber.Content = a.heathy.ToString();
             sickNumber.Content = a.sick.ToString();
             deathNumber.Content = a.sick.ToString();
-
         }
+
+        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (people != null) people.changeMoveMethod((bool)checkBox.IsChecked);
+        }
+
+        private void changeDirectionChance_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                double chance;
+                chance = Convert.ToDouble(changeDirectionChance.Text);
+                StatBarItem.Content = "Zmienino szanse na zmiane kierunku";
+                if(people != null) people.changeDirectionChance = chance;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format szansy na zmiane kierunku ";
+            };
+        }
+
+
+       
     }
 }
