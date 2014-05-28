@@ -14,6 +14,16 @@
         <Button Content="Jedna epoka " HorizontalAlignment="Left" Margin="486,87,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click_1"/>
         <Button Content="Symuluj epoko" HorizontalAlignment="Left" Margin="601,127,0,0" VerticalAlignment="Top" Width="108" Click="Button_Click_2"/>
         <TextBox Name="epochNumber" HorizontalAlignment="Left" Height="20" Margin="486,127,0,0" TextWrapping="Wrap" Text="Ile epok" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Zdrowych" HorizontalAlignment="Left" Margin="486,340,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Chorych" HorizontalAlignment="Left" Margin="486,371,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Umarlo" HorizontalAlignment="Left" Margin="486,402,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Szansa zararzenia" HorizontalAlignment="Left" Margin="486,164,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="infectChance" HorizontalAlignment="Left" Height="23" Margin="601,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0,5"/>
+        <Label Name="healthyNumber" Content="Label" HorizontalAlignment="Left" Margin="589,340,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Name="sickNumber" Content="Label" HorizontalAlignment="Left" Margin="589,371,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Name="deathNumber" Content="Label" HorizontalAlignment="Left" Margin="589,402,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Content="Zyje" HorizontalAlignment="Left" Margin="486,309,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label Name="aliveNumber" Content="Label" HorizontalAlignment="Left" Margin="589,309,0,0" VerticalAlignment="Top" Width="107"/>
 
     </Grid>
 </Window>

@@ -32,7 +32,6 @@ namespace epidemia
             InitializeComponent();
            
         }
-        int popSize;
         populacja people;
 
         //Tworzenie populacji button
@@ -40,14 +39,18 @@ namespace epidemia
         {
             try
             {
+                int popSize;
+                double chance;
+                chance = Convert.ToDouble(infectChance.Text);
                 popSize = Convert.ToInt32(PopSize.Text);
-                people = new populacja(popSize);
+                people = new populacja(popSize, chance);
                 StatBarItem.Content = "Stworzono populacje";
                 people.rysujPopulacje(canvas);
+                updatePopulationNumers();
             }
             catch(FormatException)
             {
-                StatBarItem.Content = "Błedny format wielkości populacji";
+                StatBarItem.Content = "Błedny format wielkości populacji lub szansa na zarazenie ";
             };
         }
 
@@ -75,6 +78,16 @@ namespace epidemia
             {
                 StatBarItem.Content = "Błedny rozmiar symulacji epok";
             };
+        }
+
+        public void updatePopulationNumers()
+        {
+            currentState a = this.people.getPopulationState();
+            aliveNumber.Content = a.alive.ToString();
+            healthyNumber.Content = a.heathy.ToString();
+            sickNumber.Content = a.sick.ToString();
+            deathNumber.Content = a.sick.ToString();
+
         }
     }
 }

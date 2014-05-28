@@ -8,12 +8,23 @@ using System.Windows.Shapes;
 
 namespace epidemia
 {
+    public struct currentState {
+        public int alive;
+        public int sick;
+        public int heathy;
+        public int dead;
+    }
+
     public class populacja
     {
         private List<Osobnik> curretPopulation;
         public int alive;
+        public int heatly;
+        public int sick;
+        public int dead;
+        public double infectChance;
 
-        public populacja(int size)
+        public populacja(int size, double chance)
         {
             curretPopulation = new List<Osobnik>();
             this.alive = 0;
@@ -30,7 +41,9 @@ namespace epidemia
                     if (alive == size) break; 
                 }
             }
-           
+            this.sick = 0;
+            this.heatly = alive;
+            this.dead = 0;
         }
         public void rysujPopulacje(Canvas c)
         {
@@ -40,7 +53,6 @@ namespace epidemia
                 curretPopulation[i].wyswietl(c);
             }
         }
-
         public void moveCanvasChilds(Canvas c)
         {
             //c.Children.Clear();
@@ -53,6 +65,15 @@ namespace epidemia
 
         }
 
+        public currentState getPopulationState()
+        {
+            currentState ret;
+            ret.alive = this.alive;
+            ret.heathy = this.heatly;
+            ret.sick = this.sick;
+            ret.dead = this.dead;
+            return ret;
+        }
 
     }
 }
