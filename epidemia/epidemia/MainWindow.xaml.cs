@@ -25,7 +25,7 @@ namespace epidemia
         public MainWindow()
         {
             InitializeComponent();
-           
+            this.Title = "Symylacja epidemi - Grzegorz Sychowszki, Kacper Stamski";           
         }
         populacja people;
 
