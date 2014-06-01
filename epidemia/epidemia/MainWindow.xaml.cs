@@ -45,6 +45,7 @@ namespace epidemia
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
                 people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
+                people.infectChance = Convert.ToDouble(infectChance.Text);                
             }
             catch(FormatException)
             {
@@ -109,6 +110,21 @@ namespace epidemia
             catch (FormatException)
             {
                 StatBarItem.Content = "Zły format szansy na zmiane kierunku ";
+            };
+        }
+
+        private void infectChance_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                double chance;
+                chance = Convert.ToDouble(infectChance.Text);
+                StatBarItem.Content = "Zmienino szanse na zarazenie,";
+                if (people != null) people.infectChance = chance;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format szansy na zarazenie ";
             };
         }
 

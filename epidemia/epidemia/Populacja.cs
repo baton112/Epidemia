@@ -190,8 +190,7 @@ namespace epidemia
                                 if(!target.isSick() && target.canGetSick())
                                 {
                                     double chance = r.NextDouble();
-                                    //if (chance <= this.infectChance) //losujemy nowy kierunek inny niz byl przedtem 
-                                    if(true)
+                                    if (chance <= this.infectChance)
                                     {
                                         target.getSick();
                                         this.sick++;
@@ -200,7 +199,6 @@ namespace epidemia
                             });
                         }
                     });
-
                 }
             }
         }
