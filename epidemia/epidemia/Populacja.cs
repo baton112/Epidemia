@@ -86,13 +86,18 @@ namespace epidemia
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    for (int k = 0; k < currentPop[j, i].Count; k++)
+                    /// (int k = 0, iteato; k < currentPop[j, i].Count; k++)
+                    //List<Osobnik> tmp = new List<Osobnik>(currentPop[j, i]);
+                    //tmp = currentPop[j, i].Coppy;
+                    //currentPop[j, i].Clear();
+                    foreach( Osobnik o in currentPop[j, i])
                     {
                         //if (this.currentyear != currentPop[j, i][k].getAge()) continue;
                         if (!this.radomMovment) // losujemy kierunek poruszania
                         {
                             int direc = r.Next(4);
-                            currentPop[j, i][k].changeDirection((Direction)direc);
+                            //currentPop[j, i][k].changeDirection((Direction)direc);
+                            o.changeDirection((Direction)direc);
                         }
                         else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
                         {
@@ -100,24 +105,24 @@ namespace epidemia
                             if (chance < this.changeDirectionChance) //losujemy nowy kierunek inny niz byl przedtem 
                             {
                                 int newDirec = r.Next(4);
-                                if (currentPop[j, i][k].direction == (Direction)newDirec)
+                                if (o.direction == (Direction)newDirec)
                                 {
-                                    while (currentPop[j,i][k].direction == (Direction)newDirec)
+                                    while (o.direction == (Direction)newDirec)
                                     {
                                         newDirec = r.Next(4);
                                     }
                                 }
-                                currentPop[j, i][k].changeDirection((Direction)newDirec);
+                                o.changeDirection((Direction)newDirec);
                             }
                         }
                         //wygrano nowy kierunek 
-                        currentPop[j, i][k].moveCanvasChilds(c, selectedPreson);
+                        o.moveCanvasChilds(c, selectedPreson);
                         //przesunieto na canvasie 
                         // --------Przesuniecie aktualnego osobnika do innej listy 
-                        //Osobnik tmp = currentPop[j, i][k];
-                        //tmp.getOlder();
-                        //currentPop[j, i].RemoveAt(k);
-                        //addToList(tmp);
+                        //Osobnik tmpOsobnik = o;
+                        o.getOlder();
+                        //currentPop[j, i].Remove(o);
+                        //addToList(o);
                         selectedPreson += 1;
                     }
                 }
