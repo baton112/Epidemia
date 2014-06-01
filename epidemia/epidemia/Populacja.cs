@@ -18,7 +18,6 @@ namespace epidemia
 
     public class populacja
     {
-        //private List<Osobnik> curretPopulation;
         private List<Osobnik>[,] currentPop;
         public int alive;
         public int heatly;
@@ -79,24 +78,17 @@ namespace epidemia
         }
         public void moveCanvasChilds(Canvas c)
         {
-            //c.Children.Clear();
             Random r = new Random();
             int selectedPreson = 0;
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    /// (int k = 0, iteato; k < currentPop[j, i].Count; k++)
-                    //List<Osobnik> tmp = new List<Osobnik>(currentPop[j, i]);
-                    //tmp = currentPop[j, i].Coppy;
-                    //currentPop[j, i].Clear();
                     foreach( Osobnik o in currentPop[j, i])
                     {
-                        //if (this.currentyear != currentPop[j, i][k].getAge()) continue;
                         if (!this.radomMovment) // losujemy kierunek poruszania
                         {
                             int direc = r.Next(4);
-                            //currentPop[j, i][k].changeDirection((Direction)direc);
                             o.changeDirection((Direction)direc);
                         }
                         else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
@@ -118,16 +110,29 @@ namespace epidemia
                         //wygrano nowy kierunek 
                         o.moveCanvasChilds(c, selectedPreson);
                         //przesunieto na canvasie 
-                        // --------Przesuniecie aktualnego osobnika do innej listy 
-                        //Osobnik tmpOsobnik = o;
                         o.getOlder();
-                        //currentPop[j, i].Remove(o);
-                        //addToList(o);
                         selectedPreson += 1;
                     }
                 }
             }
             currentyear += 1;
+            // czyszczenie starych list i wpisanie w nowe miejsca w tablicy list 
+            List<Osobnik> allList = new List<Osobnik>();
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    foreach (Osobnik o in currentPop[j, i])
+                    {
+                        allList.Add(o);
+                    }
+                    currentPop[j, i].Clear();
+                }
+            }
+            foreach (Osobnik o in allList)
+            {
+               addToList(o);
+            }
         }
 
         public currentState getPopulationState()

@@ -78,7 +78,7 @@ namespace epidemia
             switch (this.direction)
             {
                 case Direction.right:
-                    if (this.position.X + MainWindow.osobnikSize <= MainWindow.canvasSizeX)
+                    if (this.position.X + MainWindow.osobnikSize < MainWindow.canvasSizeX)
                         this.position.X+=MainWindow.osobnikSize;
                     break;
                 case Direction.left:
@@ -86,7 +86,7 @@ namespace epidemia
                         this.position.X-=MainWindow.osobnikSize;
                     break;
                 case Direction.down:
-                    if (this.position.Y + MainWindow.osobnikSize <= MainWindow.canvasSizeY)
+                    if (this.position.Y + MainWindow.osobnikSize < MainWindow.canvasSizeY)
                         this.position.Y += MainWindow.osobnikSize;
                     break;
                 case Direction.up:
@@ -111,9 +111,8 @@ namespace epidemia
 
         public Point getPosition()
         {
-            Point tmp = this.position;
-            tmp.X /= MainWindow.osobnikSize;
-            tmp.Y /= MainWindow.osobnikSize;
+            Point tmp = new Point(this.position.X / MainWindow.osobnikSize, this.position.Y /MainWindow.osobnikSize);
+
             return tmp;
         }
 
