@@ -25,10 +25,18 @@ namespace epidemia
         public Osobnik(int x, int y, int rand)
         {
             this.condition = State.zdrowy;
-            this.position.X = x;
-            this.position.Y = y;
+            this.position.X = x*MainWindow.osobnikSize;
+            this.position.Y = y*MainWindow.osobnikSize;
             this.direction = (Direction) rand;
             this.age = 0; 
+        }
+        public Osobnik(int x, int y, int rand, int age)
+        {
+            this.condition = State.zdrowy;
+            this.position.X = x*MainWindow.osobnikSize;
+            this.position.Y = y*MainWindow.osobnikSize;
+            this.direction = (Direction)rand;
+            this.age = age;
         }
         
         public Boolean isSick() // true if sick, flase if healthy 

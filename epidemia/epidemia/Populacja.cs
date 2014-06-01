@@ -25,6 +25,7 @@ namespace epidemia
         public int sick;
         public int dead;
         public double infectChance;
+        public double babyChance;
         bool radomMovment; // true poruszamy dalej w tym samym kierunku
         public double changeDirectionChance;
         public int currentyear;
@@ -49,8 +50,7 @@ namespace epidemia
                 {
                     for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                     {
-                        //curretPopulation.Add(new Osobnik(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize, r.Next(4)));
-                        currentPop[j, i].Add(new Osobnik(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize, r.Next(4)));
+                        currentPop[j, i].Add(new Osobnik(j, i, r.Next(4)));
                         this.alive += 1;
                         if (alive == size) break; 
                     }
@@ -195,6 +195,7 @@ namespace epidemia
                                     {
                                         target.getSick();
                                         this.sick++;
+                                        this.heatly--;
                                     }
                                 }
                             });
@@ -202,6 +203,46 @@ namespace epidemia
                     });
                 }
             }
+        }
+
+        public void makeBabies(Canvas c)
+        {
+            List<Osobnik> allList = new List<Osobnik>();
+            Random r = new Random();
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    Parallel.ForEach(currentPop[j, i], o =>
+                    {
+                        if (!o.isSick())
+                        {
+                            Parallel.ForEach(currentPop[j, i], target =>
+                            {
+                                if (!target.isSick())
+                                {
+                                    double chance = r.NextDouble();
+                                    if (chance <= babyChance)
+                                    {
+                                        Osobnik a = new Osobnik((int)o.getPosition().X, (int)o.getPosition().Y, (int)r.Next(4), o.getAge());
+                                        this.alive++;
+                                        this.heatly++;
+                                        allList.Add(a);
+
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            foreach(Osobnik o in allList)
+            {
+                addToList(o);
+                o.wyswietl(c);
+            }
+
+
         }
 
     }
