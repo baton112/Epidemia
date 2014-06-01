@@ -18,9 +18,10 @@ namespace epidemia
 {
     public partial class MainWindow : Window
     {
-        public static int osobnikSize = 2; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
+        public static int osobnikSize = 4; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
         public static int canvasSizeX = 400; // rozmiar canvas X
         public static int canvasSizeY = 400; // rozmiar canvas Y
+        public int year; 
   
         public MainWindow()
         {
@@ -44,6 +45,7 @@ namespace epidemia
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
                 people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
+                this.year = 0;
             }
             catch(FormatException)
             {

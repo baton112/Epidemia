@@ -18,7 +18,8 @@ namespace epidemia
 
     public class populacja
     {
-        private List<Osobnik> curretPopulation;
+        //private List<Osobnik> curretPopulation;
+        private List<Osobnik>[,] currentPop;
         public int alive;
         public int heatly;
         public int sick;
@@ -26,19 +27,30 @@ namespace epidemia
         public double infectChance;
         bool radomMovment; // true poruszamy dalej w tym samym kierunku
         public double changeDirectionChance;
+        public int currentyear;
 
         public populacja(int size, double chance, bool randomMove)
         {
-            curretPopulation = new List<Osobnik>();
+            //curretPopulation = new List<Osobnik>();
+            currentPop = new List<Osobnik>[MainWindow.canvasSizeX/MainWindow.osobnikSize, MainWindow.canvasSizeY/MainWindow.osobnikSize];
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    currentPop[j, i] = new List<Osobnik>();
+                }
+            }
+
             Random r = new Random();
             this.alive = 0;
             while (alive < size)
             {
-                for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) 
+                for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
                 {
-                    for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++)
+                    for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                     {
-                        curretPopulation.Add(new Osobnik(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize, r.Next(4)));
+                        //curretPopulation.Add(new Osobnik(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize, r.Next(4)));
+                        currentPop[j, i].Add(new Osobnik(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize, r.Next(4)));
                         this.alive += 1;
                         if (alive == size) break; 
                     }
@@ -49,47 +61,68 @@ namespace epidemia
             this.heatly = alive;
             this.dead = 0;
             this.radomMovment = randomMove;
+            this.currentyear = 0;
         }
         public void rysujPopulacje(Canvas c)
         {
             c.Children.Clear();
-            for(int i = 0; i < alive; i++)
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
-                curretPopulation[i].wyswietl(c);
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    for(int k = 0; k < currentPop[j,i].Count ; k++)
+                    {
+                        currentPop[j, i][k].wyswietl(c);
+                    }
+                }
             }
         }
         public void moveCanvasChilds(Canvas c)
         {
             //c.Children.Clear();
             Random r = new Random();
-            for (int i = 0; i < alive; i++)
+            int selectedPreson = 0;
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
-                if(!this.radomMovment) // losujemy kierunek poruszania
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    int direc = r.Next(4);
-                    curretPopulation[i].changeDirection((Direction)direc);
-                    
-                }
-                else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
-                {
-                    double chance = r.NextDouble();
-                    if (chance < this.changeDirectionChance) //losujemy nowy kierunek inny niz byl przedtem 
+                    for (int k = 0; k < currentPop[j, i].Count; k++)
                     {
-                        int newDirec = r.Next(4);
-                        if (curretPopulation[i].direction == (Direction)newDirec)
+                        //if (this.currentyear != currentPop[j, i][k].getAge()) continue;
+                        if (!this.radomMovment) // losujemy kierunek poruszania
                         {
-                            while (curretPopulation[i].direction == (Direction)newDirec)
+                            int direc = r.Next(4);
+                            currentPop[j, i][k].changeDirection((Direction)direc);
+                        }
+                        else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
+                        {
+                            double chance = r.NextDouble();
+                            if (chance < this.changeDirectionChance) //losujemy nowy kierunek inny niz byl przedtem 
                             {
-                                newDirec = r.Next(4);
+                                int newDirec = r.Next(4);
+                                if (currentPop[j, i][k].direction == (Direction)newDirec)
+                                {
+                                    while (currentPop[j,i][k].direction == (Direction)newDirec)
+                                    {
+                                        newDirec = r.Next(4);
+                                    }
+                                }
+                                currentPop[j, i][k].changeDirection((Direction)newDirec);
                             }
                         }
-                        curretPopulation[i].changeDirection((Direction)newDirec);
+                        //wygrano nowy kierunek 
+                        currentPop[j, i][k].moveCanvasChilds(c, selectedPreson);
+                        //przesunieto na canvasie 
+                        // --------Przesuniecie aktualnego osobnika do innej listy 
+                        //Osobnik tmp = currentPop[j, i][k];
+                        //tmp.getOlder();
+                        //currentPop[j, i].RemoveAt(k);
+                        //addToList(tmp);
+                        selectedPreson += 1;
                     }
                 }
-                curretPopulation[i].moveCanvasChilds(c, i);
-                
             }
-
+            currentyear += 1;
         }
 
         public currentState getPopulationState()
@@ -106,6 +139,12 @@ namespace epidemia
         public void changeMoveMethod(bool method)
         {
             this.radomMovment = method;
+        }
+
+        //dodaje osobni do listy na podstawie jego pozycji 
+        private void addToList(Osobnik o)
+        {
+            currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Add(o);
         }
 
     }

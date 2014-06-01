@@ -17,8 +17,9 @@ namespace epidemia
     public class Osobnik
     {
         private State condition;
-        Point position;
+        private Point position;
         public Direction direction;
+        int age;
 
         public Osobnik() { }
         public Osobnik(int x, int y, int rand)
@@ -27,6 +28,7 @@ namespace epidemia
             this.position.X = x;
             this.position.Y = y;
             this.direction = (Direction) rand;
+            this.age = 0; 
         }
         
         public Boolean isSick()
@@ -76,20 +78,20 @@ namespace epidemia
             switch (this.direction)
             {
                 case Direction.right:
-                    if(this.position.X+1 < MainWindow.canvasSizeX)
-                        this.position.X++;
+                    if (this.position.X + MainWindow.osobnikSize <= MainWindow.canvasSizeX)
+                        this.position.X+=MainWindow.osobnikSize;
                     break;
                 case Direction.left:
-                    if (this.position.X -1 >= 0)
-                        this.position.X--;
+                    if (this.position.X - MainWindow.osobnikSize >= 0)
+                        this.position.X-=MainWindow.osobnikSize;
                     break;
                 case Direction.down:
-                    if (this.position.Y + 1 < MainWindow.canvasSizeY)
-                        this.position.Y++;
+                    if (this.position.Y + MainWindow.osobnikSize <= MainWindow.canvasSizeY)
+                        this.position.Y += MainWindow.osobnikSize;
                     break;
                 case Direction.up:
-                    if (this.position.Y- 1 >= 0)
-                        this.position.Y--;
+                    if (this.position.Y - MainWindow.osobnikSize >= 0)
+                        this.position.Y -= MainWindow.osobnikSize;
                     break;
             }
         }
@@ -106,6 +108,25 @@ namespace epidemia
             Canvas.SetTop(rectangle, this.position.Y);
             Canvas.SetLeft(rectangle, this.position.X);
         }
+
+        public Point getPosition()
+        {
+            Point tmp = this.position;
+            tmp.X /= MainWindow.osobnikSize;
+            tmp.Y /= MainWindow.osobnikSize;
+            return tmp;
+        }
+
+        public void getOlder()
+        {
+            this.age++;
+        }
+
+        public int getAge()
+        {
+            return this.age;
+        }
+
 
 
     }
