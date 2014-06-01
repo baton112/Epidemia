@@ -45,7 +45,8 @@ namespace epidemia
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
                 people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
-                people.infectChance = Convert.ToDouble(infectChance.Text);                
+                people.infectChance = Convert.ToDouble(infectChance.Text);
+                people.babyChance = Convert.ToDouble(babyChance.Text);  
             }
             catch(FormatException)
             {
@@ -58,6 +59,7 @@ namespace epidemia
         {
             this.people.moveCanvasChilds(canvas);
             this.people.getSick();
+            this.people.makeBabies(canvas);
             StatBarItem.Content = "Przesunieto";
             updatePopulationNumers();
         }
@@ -73,6 +75,7 @@ namespace epidemia
                 {
                     this.people.moveCanvasChilds(canvas);
                     this.people.getSick();
+                    this.people.makeBabies(canvas);
                 }
                 StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
             }
@@ -125,6 +128,21 @@ namespace epidemia
             catch (FormatException)
             {
                 StatBarItem.Content = "Zły format szansy na zarazenie ";
+            };
+        }
+
+        private void babyChance_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                double chance;
+                chance = Convert.ToDouble(babyChance.Text);
+                StatBarItem.Content = "Zmienino szanse na rozmnozenie,";
+                if (people != null) people.babyChance = chance;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format szansy na rozmnozenie ";
             };
         }
 
