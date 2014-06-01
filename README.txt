@@ -2,7 +2,6 @@ Sztuczna inteligencja - projek - Symulacja epidemii
 
 Do zrobienia:
 - rozmnaznanie 
-- zarazanie 
 - umieranie 
 
 Mile widziane:
