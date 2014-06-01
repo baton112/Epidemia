@@ -17,8 +17,8 @@
         <Label Content="Zdrowych" HorizontalAlignment="Left" Margin="486,353,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Content="Chorych" HorizontalAlignment="Left" Margin="486,384,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Content="Umarlo" HorizontalAlignment="Left" Margin="486,415,0,0" VerticalAlignment="Top" Width="98"/>
-        <Label Content="Szansa zararzenia" HorizontalAlignment="Left" Margin="486,164,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="infectChance" HorizontalAlignment="Left" Height="23" Margin="601,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0,5" TextChanged="infectChance_TextChanged"/>
+        <Label Content="Szansa zararzenia" HorizontalAlignment="Left" Margin="486,160,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="infectChance" HorizontalAlignment="Left" Height="23" Margin="601,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0,5" TextChanged="infectChance_TextChanged"/>
         <Label Name="healthyNumber" Content="Label" HorizontalAlignment="Left" Margin="589,353,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Name="sickNumber" Content="Label" HorizontalAlignment="Left" Margin="589,384,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Name="deathNumber" Content="Label" HorizontalAlignment="Left" Margin="589,415,0,0" VerticalAlignment="Top" Width="107"/>
@@ -29,5 +29,7 @@
         <TextBox Name="changeDirectionChance" HorizontalAlignment="Left" Height="23" Margin="637,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Text="0,5" TextChanged="changeDirectionChance_TextChanged"/>
         <Label Content="Epoka" HorizontalAlignment="Left" Margin="486,296,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Name="currentEpochNumber" Content="Label" HorizontalAlignment="Left" Margin="589,296,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Content="maksymalny krok" HorizontalAlignment="Left" Margin="486,195,0,0" VerticalAlignment="Top" Width="103"/>
+        <TextBox x:Name="maxMove" HorizontalAlignment="Left" Height="23" Margin="601,195,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
