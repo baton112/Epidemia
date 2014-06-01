@@ -81,28 +81,25 @@ namespace epidemia
             c.Children.Add(rect);
         }
 
-        public void move(int maxMove)
+        public void move()
         {
-            Random r = new Random();
-            int move = r.Next(maxMove);
-
             switch (this.direction)
             {
                 case Direction.right:
-                    if (this.position.X + move < MainWindow.canvasSizeX)
-                        this.position.X+=move;
+                    if (this.position.X + MainWindow.osobnikSize < MainWindow.canvasSizeX)
+                        this.position.X+=MainWindow.osobnikSize;
                     break;
                 case Direction.left:
-                    if (this.position.X - move >= 0)
-                        this.position.X-=move;
+                    if (this.position.X - MainWindow.osobnikSize >= 0)
+                        this.position.X-=MainWindow.osobnikSize;
                     break;
                 case Direction.down:
-                    if (this.position.Y + move < MainWindow.canvasSizeY)
-                        this.position.Y +=move;
+                    if (this.position.Y + MainWindow.osobnikSize < MainWindow.canvasSizeY)
+                        this.position.Y += MainWindow.osobnikSize;
                     break;
                 case Direction.up:
-                    if (this.position.Y - move >= 0)
-                        this.position.Y -= move;
+                    if (this.position.Y - MainWindow.osobnikSize >= 0)
+                        this.position.Y -= MainWindow.osobnikSize;
                     break;
             }
         }
@@ -111,9 +108,9 @@ namespace epidemia
         {
             this.direction = d;
         }
-        public void moveCanvasChilds(Canvas c, int index,int maxMove)
+        public void moveCanvasChilds(Canvas c, int index)
         {
-            this.move(maxMove);         
+            this.move();         
             Rectangle rectangle;
             rectangle = (Rectangle)c.Children[index];
             if (this.condition == State.zdrowy) rectangle.Stroke = Brushes.Green;

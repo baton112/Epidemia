@@ -29,9 +29,8 @@ namespace epidemia
         bool radomMovment; // true poruszamy dalej w tym samym kierunku
         public double changeDirectionChance;
         public int currentyear;
-        public int maxStep;
 
-        public populacja(int size, double chance, bool randomMove, int max)
+        public populacja(int size, double chance, bool randomMove)
         {
             //curretPopulation = new List<Osobnik>();
             currentPop = new List<Osobnik>[MainWindow.canvasSizeX/MainWindow.osobnikSize, MainWindow.canvasSizeY/MainWindow.osobnikSize];
@@ -63,7 +62,6 @@ namespace epidemia
             this.dead = 0;
             this.radomMovment = randomMove;
             this.currentyear = 0;
-            this.maxStep = max;
         }
         public void rysujPopulacje(Canvas c)
         {
@@ -112,7 +110,7 @@ namespace epidemia
                             }
                         }
                         //wygrano nowy kierunek 
-                        o.moveCanvasChilds(c, selectedPreson, this.maxStep);
+                        o.moveCanvasChilds(c, selectedPreson);
                         //przesunieto na canvasie 
                         o.getOlder();
                         selectedPreson += 1;

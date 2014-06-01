@@ -36,10 +36,9 @@ namespace epidemia
             {
                 int popSize;
                 double chance;
-                int max = Convert.ToInt32(this.maxMove.Text);
                 chance = Convert.ToDouble(infectChance.Text);
                 popSize = Convert.ToInt32(PopSize.Text);
-                people = new populacja(popSize, chance, (bool)checkBox.IsChecked,max);
+                people = new populacja(popSize, chance, (bool)checkBox.IsChecked);
                 StatBarItem.Content = "Stworzono populacje";
                 people.infect(10);
                 people.rysujPopulacje(canvas);
