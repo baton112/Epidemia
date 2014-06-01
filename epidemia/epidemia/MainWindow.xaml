@@ -31,9 +31,9 @@
         <Label Content="Epoka" HorizontalAlignment="Left" Margin="486,296,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Name="currentEpochNumber" Content="Label" HorizontalAlignment="Left" Margin="589,296,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Content="Szansa rozmnozenia" HorizontalAlignment="Left" Margin="486,160,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBox Name="babyChance" HorizontalAlignment="Left" Height="23" Margin="637,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0,05" TextChanged="babyChance_TextChanged"/>
+        <TextBox Name="babyChance" HorizontalAlignment="Left" Height="23" Margin="637,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0,005" TextChanged="babyChance_TextChanged"/>
         <Label Content="maksymalny krok" HorizontalAlignment="Left" Margin="486,128,0,0" VerticalAlignment="Top" Width="103"/>
-        <TextBox x:Name="maxMove" HorizontalAlignment="Left" Height="23" Margin="601,132,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="maxMove" HorizontalAlignment="Left" Height="23" Margin="601,132,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120" TextChanged="maxMove_TextChanged"/>
 
     </Grid>
 </Window>

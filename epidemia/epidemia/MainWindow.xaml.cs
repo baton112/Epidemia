@@ -58,11 +58,15 @@ namespace epidemia
         //przesuwa dzieci na kanvasie ---- jedna epoka 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.people.moveCanvasChilds(canvas);
-            this.people.getSick();
-            this.people.makeBabies(canvas);
-            StatBarItem.Content = "Przesunieto";
-            updatePopulationNumers();
+            if (people == null) StatBarItem.Content = "Stworz poulacje !!";
+            else
+            {
+                this.people.moveCanvasChilds(canvas);
+                this.people.getSick();
+                this.people.makeBabies(canvas);
+                StatBarItem.Content = "Przesunieto";
+                updatePopulationNumers();
+            }
         }
 
         // Symuluje kilka epok nadchodzacych po sobie 
@@ -144,6 +148,21 @@ namespace epidemia
             catch (FormatException)
             {
                 StatBarItem.Content = "Zły format szansy na rozmnozenie ";
+            };
+        }
+
+        private void maxMove_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int chance;
+                chance = Convert.ToInt32(maxMove.Text);
+                StatBarItem.Content = "Zmienino kroku";
+                if (people != null) people.maxStep = chance;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format szansy kroku ";
             };
         }
 
