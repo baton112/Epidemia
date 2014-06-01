@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace epidemia
 {
@@ -84,7 +85,7 @@ namespace epidemia
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    foreach( Osobnik o in currentPop[j, i])
+                    foreach( Osobnik o in currentPop[j, i]) // nie mozna zrownolegli ze wzgledu na canvas--- nie moze zniego korzystac wiecej niz jeden na raz 
                     {
                         if (!this.radomMovment) // losujemy kierunek poruszania
                         {
@@ -122,16 +123,16 @@ namespace epidemia
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    foreach (Osobnik o in currentPop[j, i])
+                    foreach (Osobnik o in currentPop[j, i]) // nie da sie zrownoleglic bo add(o) chce dodac nulla -- nastepne instrukcje robia sie zanim skoncza sie te 
                     {
                         allList.Add(o);
                     }
                     currentPop[j, i].Clear();
                 }
             }
-            foreach (Osobnik o in allList)
+            foreach (Osobnik o in allList) // to samo co wyzej ... zrwnoleglenie gubi gdzies obiekty 
             {
-               addToList(o);
+                addToList(o);
             }
         }
 
@@ -155,6 +156,53 @@ namespace epidemia
         private void addToList(Osobnik o)
         {
             currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Add(o);
+        }
+
+        public void infect(int n)
+        {
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    if(n> 0)
+                    {
+                        currentPop[j, i][0].getSick();
+                        n--;
+                    }
+                }
+            }
+
+        }
+
+        public void getSick()
+        {
+            Random r = new Random();
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    Parallel.ForEach(currentPop[j,i], o =>
+                    {
+                        if(o.isSick())
+                        {
+                            Parallel.ForEach(currentPop[j, i], target =>
+                            {
+                                if(!target.isSick() && target.canGetSick())
+                                {
+                                    double chance = r.NextDouble();
+                                    //if (chance <= this.infectChance) //losujemy nowy kierunek inny niz byl przedtem 
+                                    if(true)
+                                    {
+                                        target.getSick();
+                                        this.sick++;
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                }
+            }
         }
 
     }

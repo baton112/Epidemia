@@ -31,7 +31,7 @@ namespace epidemia
             this.age = 0; 
         }
         
-        public Boolean isSick()
+        public Boolean isSick() // true if sick, flase if healthy 
         {
             if (condition == State.chory)
             {
@@ -39,7 +39,7 @@ namespace epidemia
             }
             else return false;
         }
-        public Boolean canGetSic()
+        public Boolean canGetSick()
         {
             if (condition == State.zdrowy)
             {
@@ -103,8 +103,10 @@ namespace epidemia
         public void moveCanvasChilds(Canvas c, int index)
         {
             this.move();         
-            Rectangle rectangle; 
+            Rectangle rectangle;
             rectangle = (Rectangle)c.Children[index];
+            if (this.condition == State.zdrowy) rectangle.Stroke = Brushes.Green;
+            else rectangle.Stroke = Brushes.Red;
             Canvas.SetTop(rectangle, this.position.Y);
             Canvas.SetLeft(rectangle, this.position.X);
         }
@@ -125,6 +127,12 @@ namespace epidemia
         {
             return this.age;
         }
+
+        public void getSick()
+        {
+            this.condition = State.chory;
+        }
+
 
 
 

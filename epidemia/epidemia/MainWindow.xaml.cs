@@ -27,7 +27,7 @@ namespace epidemia
             InitializeComponent();
             this.Title = "Symylacja epidemi - Grzegorz Sychowszki, Kacper Stamski";           
         }
-        populacja people;
+        public populacja people;
 
         //Tworzenie populacji button
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +40,7 @@ namespace epidemia
                 popSize = Convert.ToInt32(PopSize.Text);
                 people = new populacja(popSize, chance, (bool)checkBox.IsChecked);
                 StatBarItem.Content = "Stworzono populacje";
+                people.infect(10);
                 people.rysujPopulacje(canvas);
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
@@ -55,6 +56,7 @@ namespace epidemia
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.people.moveCanvasChilds(canvas);
+            this.people.getSick();
             StatBarItem.Content = "Przesunieto";
             updatePopulationNumers();
         }
@@ -69,6 +71,7 @@ namespace epidemia
                 for (int i = 0; i < n; i++)
                 {
                     this.people.moveCanvasChilds(canvas);
+                    this.people.getSick();
                 }
                 StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
             }
