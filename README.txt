@@ -1,7 +1,7 @@
 Sztuczna inteligencja - projek - Symulacja epidemii 
 
 Do zrobienia:
-- rozmnaznanie 
+- rozmnaznanie -- dziala ale rozmnazaja sie za szybko i potem wywala NUll exception
 - umieranie 
 
 Mile widziane:
