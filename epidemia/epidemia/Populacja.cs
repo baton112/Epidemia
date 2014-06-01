@@ -78,7 +78,6 @@ namespace epidemia
             }
         }
 
-        //niepotrzebny komentarz
         public void moveCanvasChilds(Canvas c)
         {
             Random r = new Random();
@@ -204,9 +203,6 @@ namespace epidemia
                 }
             }
         }
-
-
-
 
     }
 }

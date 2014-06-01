@@ -89,7 +89,7 @@ namespace epidemia
             aliveNumber.Content = a.alive.ToString();
             healthyNumber.Content = a.heathy.ToString();
             sickNumber.Content = a.sick.ToString();
-            deathNumber.Content = a.sick.ToString();
+            deathNumber.Content = a.dead.ToString();
             this.currentEpochNumber.Content = this.people.currentyear.ToString();
         }
 
@@ -128,9 +128,5 @@ namespace epidemia
             };
         }
 
-
-
-
-       
     }
 }
