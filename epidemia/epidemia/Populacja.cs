@@ -68,21 +68,7 @@ namespace epidemia
             this.radomMovment = randomMove;
             this.currentyear = 0;
         }
-        public void rysujPopulacje(Canvas c)
-        {
-            c.Children.Clear();
-            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
-            {
-                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
-                {
-                    for(int k = 0; k < currentPop[j,i].Count ; k++)
-                    {
-                        currentPop[j, i][k].wyswietl(c);
-                    }
-                }
-            }
-        }
-
+        
         public currentState getPopulationState()
         {
             currentState ret;
@@ -106,22 +92,6 @@ namespace epidemia
         }
 
         public void infect(int n)
-        {
-            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
-            {
-                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
-                {
-                    if(n> 0)
-                    {
-                        currentPop[j, i][0].getSick();
-                        n--;
-                    }
-                }
-            }
-
-        }
-
-        public void insertSickPersons(int n)
         {
             /*Random r = new Random();
             for(int i = 0; i < n; i++)

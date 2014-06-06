@@ -96,7 +96,7 @@ namespace epidemia
             try
             {
                 n = Convert.ToInt32(newSickTextBox.Text);
-                this.people.insertSickPersons(n);
+                this.people.infect(n);
                 this.people.newDisplay(canvas);
                 StatBarItem.Content = "Dodano " + n.ToString() + " chorych ";
             }

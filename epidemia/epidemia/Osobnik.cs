@@ -20,16 +20,6 @@ namespace epidemia
         private Point position;
         public Direction direction;
         int age;
-
-        public Osobnik() { }
-        public Osobnik(int x, int y, int rand, bool chory)
-        {
-            this.condition = State.chory;
-            this.position.X = x * MainWindow.osobnikSize;
-            this.position.Y = y * MainWindow.osobnikSize;
-            this.direction = (Direction)rand;
-            this.age = 0;
-        }
         
         public Osobnik( Osobnik o )
         {
@@ -96,7 +86,6 @@ namespace epidemia
             Canvas.SetTop(rect, startPoint.Y);
             c.Children.Add(rect);
         }
-
         public void move()
         {
             switch (this.direction)
@@ -119,7 +108,6 @@ namespace epidemia
                     break;
             }
         }
-
         public void changeDirection(Direction d)
         {
             this.direction = d;
