@@ -112,6 +112,8 @@ namespace epidemia
         {
             this.direction = d;
         }
+        
+        //zwraca pozycje x, y w tablicy 
         public Point getPosition()
         {
             Point tmp = new Point(this.position.X / MainWindow.osobnikSize, this.position.Y /MainWindow.osobnikSize);

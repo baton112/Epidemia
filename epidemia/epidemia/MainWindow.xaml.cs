@@ -61,6 +61,7 @@ namespace epidemia
         {
             this.people.newMove();
             this.people.getSick();
+            this.people.makeBabies(canvas);
             this.people.newDisplay(canvas);
             StatBarItem.Content = "Przesunieto";
             updatePopulationNumers();
@@ -77,7 +78,7 @@ namespace epidemia
                 {
                     this.people.newMove();
                     this.people.getSick();
-                    //this.people.makeBabies(canvas);
+                    this.people.makeBabies(canvas);
                     this.people.newDisplay(canvas);
                 }
                 StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
@@ -145,6 +146,7 @@ namespace epidemia
                 chance = Convert.ToDouble(infectChance.Text);
                 StatBarItem.Content = "Zmienino szanse na zarazenie,";
                 if (people != null) people.infectChance = chance;
+                System.Console.WriteLine("zarazenie" + chance);
             }
             catch (FormatException)
             {
@@ -160,6 +162,7 @@ namespace epidemia
                 chance = Convert.ToDouble(babyChance.Text);
                 StatBarItem.Content = "Zmienino szanse na rozmnozenie,";
                 if (people != null) people.babyChance = chance;
+                System.Console.WriteLine("rozmnozenie"+chance);
             }
             catch (FormatException)
             {

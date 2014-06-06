@@ -88,7 +88,7 @@ namespace epidemia
         //dodaje osobni do listy na podstawie jego pozycji 
         private void addToList(Osobnik o)
         {
-            
+            this.currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Add(new Osobnik(o));
         }
 
         public void infect(int n)
@@ -149,14 +149,15 @@ namespace epidemia
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    Parallel.ForEach(currentPop[j, i], o =>
+                    foreach(Osobnik o in currentPop[j,i]) // po zdrowych osobnikach 
                     {
                         if (!o.isSick())
                         {
                             //Parallel.ForEach(currentPop[j, i], target =>
-                            foreach(Osobnik target in currentPop[j, i])
+                            //foreach(Osobnik target in currentPop[j, i]) // po celach 
+                            for (int k = 0; k < MainWindow.maxMeet && k < currentPop[j, i].Count; k++) /// po kandydatach na zarazenie 
                             {
-                                if (!target.isSick())
+                                if (!currentPop[j, i][k].isSick())
                                 {
                                     double chance = r.NextDouble();
                                     if (chance <= babyChance)
@@ -166,22 +167,19 @@ namespace epidemia
                                         this.heatly++;
                                         allList.Add(a);
                                         break;
-
                                     }
                                 }
                             }
                             //);
                         }
-                    });
+                    }//);
                 }
             }
             foreach(Osobnik o in allList)
             {
                 addToList(o);
-                o.wyswietl(c);
+                //o.wyswietl(c);
             }
-
-
         }
 
         public void newDisplay(Canvas c)
