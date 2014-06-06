@@ -19,8 +19,10 @@ namespace epidemia
     public partial class MainWindow : Window
     {
         public static int osobnikSize = 4; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
-        public static int canvasSizeX = 400; // rozmiar canvas X
-        public static int canvasSizeY = 400; // rozmiar canvas Y
+        public static int populationGrigSize = 50;
+        public static int canvasSizeX = osobnikSize * populationGrigSize; // rozmiar canvas X
+        public static int canvasSizeY = osobnikSize * populationGrigSize; // rozmiar canvas Y
+        public static int maxMeet = 2; 
   
         public MainWindow()
         {
@@ -40,7 +42,7 @@ namespace epidemia
                 popSize = Convert.ToInt32(PopSize.Text);
                 people = new populacja(popSize, chance, (bool)checkBox.IsChecked);
                 StatBarItem.Content = "Stworzono populacje";
-                people.infect(10);
+                people.infect(1);
                 people.rysujPopulacje(canvas);
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
@@ -57,9 +59,9 @@ namespace epidemia
         //przesuwa dzieci na kanvasie ---- jedna epoka 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.people.moveCanvasChilds(canvas);
+            this.people.newMove();
             this.people.getSick();
-            this.people.makeBabies(canvas);
+            this.people.newDisplay(canvas);
             StatBarItem.Content = "Przesunieto";
             updatePopulationNumers();
         }
@@ -73,9 +75,11 @@ namespace epidemia
                 n = Convert.ToInt32(epochNumber.Text);
                 for (int i = 0; i < n; i++)
                 {
-                    this.people.moveCanvasChilds(canvas);
+                    //this.people.moveCanvasChilds(canvas);
+                    this.people.newMove();
                     this.people.getSick();
-                    this.people.makeBabies(canvas);
+                    //this.people.makeBabies(canvas);
+                    this.people.newDisplay(canvas);
                 }
                 StatBarItem.Content = "Zasymulowano "+ n.ToString() + " epok. ";
             }
@@ -144,6 +148,22 @@ namespace epidemia
             {
                 StatBarItem.Content = "Zły format szansy na rozmnozenie ";
             };
+        }
+
+        private void maxMeet_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int max;
+                max = Convert.ToInt32(maxMeetTextBox.Text);
+                StatBarItem.Content = "Zmieniono maks spodkan";
+                maxMeet = max;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format max spodkan ";
+            };
+
         }
 
     }

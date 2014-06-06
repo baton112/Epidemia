@@ -22,6 +22,13 @@ namespace epidemia
         int age;
 
         public Osobnik() { }
+        public Osobnik( Osobnik o )
+        {
+            this.condition = o.condition;
+            this.position = o.position;
+            this.direction = o.direction;
+            this.age = o.age;
+        }
         public Osobnik(int x, int y, int rand)
         {
             this.condition = State.zdrowy;
@@ -108,17 +115,6 @@ namespace epidemia
         {
             this.direction = d;
         }
-        public void moveCanvasChilds(Canvas c, int index)
-        {
-            this.move();         
-            Rectangle rectangle;
-            rectangle = (Rectangle)c.Children[index];
-            if (this.condition == State.zdrowy) rectangle.Stroke = Brushes.Green;
-            else rectangle.Stroke = Brushes.Red;
-            Canvas.SetTop(rectangle, this.position.Y);
-            Canvas.SetLeft(rectangle, this.position.X);
-        }
-
         public Point getPosition()
         {
             Point tmp = new Point(this.position.X / MainWindow.osobnikSize, this.position.Y /MainWindow.osobnikSize);

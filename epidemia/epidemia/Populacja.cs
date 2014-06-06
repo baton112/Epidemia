@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Windows;
+using System.Windows.Media;
+
 
 namespace epidemia
 {
@@ -33,6 +36,7 @@ namespace epidemia
         public populacja(int size, double chance, bool randomMove)
         {
             //curretPopulation = new List<Osobnik>();
+            //tworzy tablice list populacji -- jedna lista do jednej pozycji [x,y] 
             currentPop = new List<Osobnik>[MainWindow.canvasSizeX/MainWindow.osobnikSize, MainWindow.canvasSizeY/MainWindow.osobnikSize];
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
@@ -44,6 +48,7 @@ namespace epidemia
 
             Random r = new Random();
             this.alive = 0;
+            //tworzy osobnikowpopulacji 
             while (alive < size)
             {
                 for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
@@ -78,65 +83,6 @@ namespace epidemia
             }
         }
 
-        public void moveCanvasChilds(Canvas c)
-        {
-            Random r = new Random();
-            int selectedPreson = 0;
-            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
-            {
-                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
-                {
-                    foreach( Osobnik o in currentPop[j, i]) // nie mozna zrownolegli ze wzgledu na canvas--- nie moze zniego korzystac wiecej niz jeden na raz 
-                    {
-                        if (!this.radomMovment) // losujemy kierunek poruszania
-                        {
-                            int direc = r.Next(4);
-                            o.changeDirection((Direction)direc);
-                        }
-                        else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
-                        {
-                            double chance = r.NextDouble();
-                            if (chance < this.changeDirectionChance) //losujemy nowy kierunek inny niz byl przedtem 
-                            {
-                                int newDirec = r.Next(4);
-                                if (o.direction == (Direction)newDirec)
-                                {
-                                    while (o.direction == (Direction)newDirec)
-                                    {
-                                        newDirec = r.Next(4);
-                                    }
-                                }
-                                o.changeDirection((Direction)newDirec);
-                            }
-                        }
-                        //wygrano nowy kierunek 
-                        o.moveCanvasChilds(c, selectedPreson);
-                        //przesunieto na canvasie 
-                        o.getOlder();
-                        selectedPreson += 1;
-                    }
-                }
-            }
-            currentyear += 1;
-            // czyszczenie starych list i wpisanie w nowe miejsca w tablicy list 
-            List<Osobnik> allList = new List<Osobnik>();
-            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
-            {
-                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
-                {
-                    foreach (Osobnik o in currentPop[j, i]) // nie da sie zrownoleglic bo add(o) chce dodac nulla -- nastepne instrukcje robia sie zanim skoncza sie te 
-                    {
-                        allList.Add(o);
-                    }
-                    currentPop[j, i].Clear();
-                }
-            }
-            foreach (Osobnik o in allList) // to samo co wyzej ... zrwnoleglenie gubi gdzies obiekty 
-            {
-                addToList(o);
-            }
-        }
-
         public currentState getPopulationState()
         {
             currentState ret;
@@ -156,7 +102,7 @@ namespace epidemia
         //dodaje osobni do listy na podstawie jego pozycji 
         private void addToList(Osobnik o)
         {
-            currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Add(o);
+            
         }
 
         public void infect(int n)
@@ -182,25 +128,27 @@ namespace epidemia
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    Parallel.ForEach(currentPop[j,i], o =>
+                    foreach(Osobnik o in currentPop[j,i]) // po zarazonych osobnikach 
                     {
                         if(o.isSick())
                         {
-                            Parallel.ForEach(currentPop[j, i], target =>
+                            for (int k = 0; k < MainWindow.maxMeet && k < currentPop[j, i].Count ;k++ ) /// po kandydatach na zarazenie 
                             {
-                                if(!target.isSick() && target.canGetSick())
+                                if (currentPop[j, i][k]!= o && !currentPop[j, i][k].isSick() && currentPop[j, i][k].canGetSick())
                                 {
                                     double chance = r.NextDouble();
                                     if (chance <= this.infectChance)
                                     {
-                                        target.getSick();
+                                        currentPop[j, i][k].getSick();
                                         this.sick++;
                                         this.heatly--;
+                                        break; // tylko jeden moze zarazic tylko jednego 
                                     }
+
                                 }
-                            });
+                            }
                         }
-                    });
+                    }
                 }
             }
         }
@@ -217,7 +165,8 @@ namespace epidemia
                     {
                         if (!o.isSick())
                         {
-                            Parallel.ForEach(currentPop[j, i], target =>
+                            //Parallel.ForEach(currentPop[j, i], target =>
+                            foreach(Osobnik target in currentPop[j, i])
                             {
                                 if (!target.isSick())
                                 {
@@ -228,10 +177,12 @@ namespace epidemia
                                         this.alive++;
                                         this.heatly++;
                                         allList.Add(a);
+                                        break;
 
                                     }
                                 }
-                            });
+                            }
+                            //);
                         }
                     });
                 }
@@ -245,5 +196,118 @@ namespace epidemia
 
         }
 
+        public void newDisplay(Canvas c)
+        {
+            c.Children.Clear();
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    ///dodanie kwadratu ---- kolor to 100 % zdrowych to zielony ... przechodzi w czerwony
+                    int sickCount = 0;
+                    int oCount = 0;
+                    foreach(Osobnik o in currentPop[j, i])
+                    {
+                        if (o.isSick()) sickCount++;
+                        oCount++;
+                    }
+                    double percent; // procent chorych 
+                    if(oCount !=0)
+                        percent = ((double)oCount - (double)sickCount) / (double)oCount * 100.0;
+                    else percent = 0;
+                    //stworzenie kwaratu do wyswielenia 
+                    Point startPoint;
+                    Rectangle rect;
+                    startPoint = new Point(j * MainWindow.osobnikSize, i * MainWindow.osobnikSize);
+                    if(oCount != 0)
+                    {                       
+                        double r, g;
+                        r = percent < 50 ? 255 : (255 - (percent * 2 - 100) * 255 );
+                        g = percent > 50 ? 255 : ((percent * 2) * 255 );
+                        //System.Console.WriteLine(percent.ToString());
+                        rect = new Rectangle
+                        {
+                            Stroke = new SolidColorBrush(Color.FromRgb((byte)r ,(byte)g,0)),
+                            StrokeThickness = MainWindow.osobnikSize
+                        };
+                    }
+                    else
+                    {
+                        rect = new Rectangle
+                        {
+                            Stroke = Brushes.White,
+                            StrokeThickness = MainWindow.osobnikSize
+                        };
+                    }
+
+                    Canvas.SetLeft(rect, startPoint.X);
+                    Canvas.SetTop(rect, startPoint.Y);
+                    c.Children.Add(rect);
+                }
+            }
+        }
+
+        public void newMove()
+        {
+            Random r = new Random();
+            int selectedPreson = 0;
+            // dla kazdej pozycji przesuwa ja w wybranym kierunku 
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    //dla kazdego osobnika w liscie
+                    foreach (Osobnik o in currentPop[j, i]) // nie mozna zrownolegli ze wzgledu na canvas--- nie moze zniego korzystac wiecej niz jeden na raz 
+                    {
+                        if (!this.radomMovment) // losujemy kierunek poruszania
+                        {
+                            int direc = r.Next(4);
+                            o.changeDirection((Direction)direc);
+                        }
+                        else // poruszamy dalej w tym samym kierynku chyba ze wylosowana liczba jest mniejsza od szansy 
+                        {
+                            double chance = r.NextDouble();
+                            if (chance < this.changeDirectionChance) //losujemy nowy kierunek inny niz byl przedtem 
+                            {
+                                int newDirec = r.Next(4);
+                                if (o.direction == (Direction)newDirec)
+                                {
+                                    while (o.direction == (Direction)newDirec)
+                                    {
+                                        newDirec = r.Next(4);
+                                    }
+                                }
+                                o.changeDirection((Direction)newDirec);
+                            }
+                        }
+                        o.move();
+                        //przesunieto na canvasie 
+                        o.getOlder();
+                        selectedPreson += 1;
+                    }
+                }
+            }
+            currentyear += 1;
+            // czyszczenie starych list i wpisanie w nowe miejsca w tablicy list 
+            List<Osobnik> allList = new List<Osobnik>();
+            //przerzucenie osobnikow do tymczasowej listy ogolnej 
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    for (int k = 0; k < currentPop[j, i].Count; k++)
+                    {
+                        allList.Add(new Osobnik(currentPop[j, i][k]));
+                    }
+                    //czyszczenie tej listy 
+                    currentPop[j, i].Clear();
+                }
+            }
+            for (int i = 0; i < allList.Count; i++)
+            {
+                if (allList[i] != null)
+                    currentPop[(int)allList[i].getPosition().X, (int)allList[i].getPosition().Y].Add(allList[i]);
+            }
+        }
     }
 }
