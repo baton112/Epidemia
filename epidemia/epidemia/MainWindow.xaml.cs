@@ -42,8 +42,8 @@ namespace epidemia
                 popSize = Convert.ToInt32(PopSize.Text);
                 people = new populacja(popSize, chance, (bool)checkBox.IsChecked);
                 StatBarItem.Content = "Stworzono populacje";
-                people.infect(1);
-                people.rysujPopulacje(canvas);
+                //people.rysujPopulacje(canvas);
+                people.newDisplay(canvas);
                 updatePopulationNumers();
                 people.changeMoveMethod((bool)checkBox.IsChecked);
                 people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
@@ -75,7 +75,6 @@ namespace epidemia
                 n = Convert.ToInt32(epochNumber.Text);
                 for (int i = 0; i < n; i++)
                 {
-                    //this.people.moveCanvasChilds(canvas);
                     this.people.newMove();
                     this.people.getSick();
                     //this.people.makeBabies(canvas);
@@ -86,6 +85,24 @@ namespace epidemia
             catch (FormatException)
             {
                 StatBarItem.Content = "Błedny rozmiar symulacji epok";
+            };
+            updatePopulationNumers();
+        }
+
+        //Tworzy zarazoncych osobnikow i dodaje ich do populacji - klawisz
+        private void Button_Click_AddSick(object sender, RoutedEventArgs e)
+        {
+            int n = 0;
+            try
+            {
+                n = Convert.ToInt32(newSickTextBox.Text);
+                this.people.insertSickPersons(n);
+                this.people.newDisplay(canvas);
+                StatBarItem.Content = "Dodano " + n.ToString() + " chorych ";
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Nie udalo sie dodac chorych (brak populacji, zly format liczby) ";
             };
             updatePopulationNumers();
         }

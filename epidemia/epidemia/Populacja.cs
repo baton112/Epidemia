@@ -121,6 +121,24 @@ namespace epidemia
 
         }
 
+        public void insertSickPersons(int n)
+        {
+            /*Random r = new Random();
+            for(int i = 0; i < n; i++)
+            {
+                this.currentPop[MainWindow.canvasSizeX / 2 / MainWindow.osobnikSize, MainWindow.canvasSizeY / 2 / MainWindow.osobnikSize]
+                    .Add(new Osobnik(MainWindow.canvasSizeX / 2 / MainWindow.osobnikSize,
+                        MainWindow.canvasSizeY / 2 / MainWindow.osobnikSize, r.Next(4), true));
+                this.sick++;
+                this.alive++;
+            }*/
+            for (int i = 0; i < n; i++)
+            {
+                this.currentPop[i % MainWindow.canvasSizeX, i / MainWindow.canvasSizeX % MainWindow.canvasSizeX][0].getSick();
+                this.sick++;
+            }
+
+        }
         public void getSick()
         {
             Random r = new Random();
