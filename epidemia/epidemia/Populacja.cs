@@ -158,6 +158,7 @@ namespace epidemia
             foreach (xyk a in allList)
             {
                 this.currentPop[a.x, a.y][a.k].canGetSick();
+                this.currentPop[a.x, a.y][a.k].getSick();
             }
         }
 
@@ -316,43 +317,32 @@ namespace epidemia
             }
         }
 
+        private bool toDie(Osobnik o)
+        {
+            if (o.isSick() && sicknessTime <= o.survived())
+              return true; 
+            else 
+            return false ;
+        }
+
         public void executeSick()
         {
             List<xyk> allList = new List<xyk>();
             List<Osobnik> allList2 = new List<Osobnik>();
             int sssss = 0;
+
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
-                    //foreach(Osobnik o in currentPop[j,i]) // po zarazonych osobnikach 
-                    for (int k = 0; k < currentPop[j, i].Count; k++ )
-                    {
-                        if (currentPop[j, i][k].isSick() && currentPop[j, i][k].survived() == this.sicknessTime && sicknessTime != 0)
-                        {
-                            //System.Console.WriteLine(currentPop[j, i][k].getAge());
-                             //jesli za dlugo chory 
-                           // {
-                                xyk tmp;
-                                tmp.x = j;
-                                tmp.y = i;
-                                tmp.k = k;
-                                this.sick--;
-                                this.alive--;
-                                this.dead++;
-                                allList2.Add(currentPop[j, i][k]);
-                                sssss++;
-                            //}
-                        }
-                    }
+                    sssss +=currentPop[j,i].RemoveAll(toDie);
                 }
             }
-            foreach (Osobnik o in allList2)
-            {
-                this.currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Remove(o);
-                //sssss++;
-            }
-            System.Console.WriteLine("usunieto"+sssss);
+            this.alive -= sssss;
+            this.dead += sssss;
+            this.sick -= sssss;
+
+            System.Console.WriteLine("usunieto" + sssss);
         }
     }
 }
