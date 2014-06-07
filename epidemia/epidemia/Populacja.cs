@@ -113,7 +113,7 @@ namespace epidemia
             }*/
             for (int i = 0; i < n; i++)
             {
-                this.currentPop[i % MainWindow.canvasSizeX, i / MainWindow.canvasSizeX % MainWindow.canvasSizeX][0].getSick();
+                this.currentPop[i % MainWindow.populationGrigSize, i / MainWindow.populationGrigSize % MainWindow.populationGrigSize][0].getSick();
                 this.sick++;
                 this.heatly--;
             }
@@ -121,7 +121,6 @@ namespace epidemia
         }
         public void getSick()
         {
-            
             List<xyk> allList = new List<xyk>();
             Random r = new Random();
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
@@ -150,7 +149,6 @@ namespace epidemia
                                         allList.Add(tmp);
                                         break; // tylko jeden moze zarazic tylko jednego 
                                     }
-
                                 }
                             }
                         }
@@ -322,6 +320,7 @@ namespace epidemia
         {
             List<xyk> allList = new List<xyk>();
             List<Osobnik> allList2 = new List<Osobnik>();
+            int sssss = 0;
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
@@ -329,11 +328,11 @@ namespace epidemia
                     //foreach(Osobnik o in currentPop[j,i]) // po zarazonych osobnikach 
                     for (int k = 0; k < currentPop[j, i].Count; k++ )
                     {
-                        if (currentPop[j, i][k].isSick())
+                        if (currentPop[j, i][k].isSick() && currentPop[j, i][k].survived() == this.sicknessTime && sicknessTime != 0)
                         {
                             //System.Console.WriteLine(currentPop[j, i][k].getAge());
-                            if (currentPop[j, i][k].survived() == this.sicknessTime && sicknessTime != 0) //jesli za dlugo chory 
-                            {
+                             //jesli za dlugo chory 
+                           // {
                                 xyk tmp;
                                 tmp.x = j;
                                 tmp.y = i;
@@ -342,7 +341,8 @@ namespace epidemia
                                 this.alive--;
                                 this.dead++;
                                 allList2.Add(currentPop[j, i][k]);
-                            }
+                                sssss++;
+                            //}
                         }
                     }
                 }
@@ -350,7 +350,9 @@ namespace epidemia
             foreach (Osobnik o in allList2)
             {
                 this.currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Remove(o);
+                //sssss++;
             }
+            System.Console.WriteLine("usunieto"+sssss);
         }
     }
 }
