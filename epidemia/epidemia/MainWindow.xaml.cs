@@ -18,7 +18,7 @@ namespace epidemia
 {
     public partial class MainWindow : Window
     {
-        public static int osobnikSize = 4; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
+        public static int osobnikSize = 8; // wielkosc kwadratu ktory bedzie przedstawial osobnika wyswietlanego
         public static int populationGrigSize = 50;
         public static int canvasSizeX = osobnikSize * populationGrigSize; // rozmiar canvas X
         public static int canvasSizeY = osobnikSize * populationGrigSize; // rozmiar canvas Y
