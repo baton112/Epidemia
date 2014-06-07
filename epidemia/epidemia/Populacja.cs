@@ -20,6 +20,14 @@ namespace epidemia
         public bool randomMovment;
     }
 
+    public struct xyk
+    {
+        public int x;
+        public int y;
+        public int k;
+
+    }
+
     public class populacja
     {
         private List<Osobnik>[,] currentPop;
@@ -32,6 +40,7 @@ namespace epidemia
         bool radomMovment; // true poruszamy dalej w tym samym kierunku
         public double changeDirectionChance;
         public int currentyear;
+        public int sicknessTime; // 0 - nieskonczona choroba .. nikt nie umeira
 
         public populacja(int size, double chance, bool randomMove)
         {
@@ -106,30 +115,39 @@ namespace epidemia
             {
                 this.currentPop[i % MainWindow.canvasSizeX, i / MainWindow.canvasSizeX % MainWindow.canvasSizeX][0].getSick();
                 this.sick++;
+                this.heatly--;
             }
 
         }
         public void getSick()
         {
+            
+            List<xyk> allList = new List<xyk>();
             Random r = new Random();
             for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
             {
                 for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                 {
+                    //zmienic sposob wybierania osob do spodkan (zeby nie bylo zawsze od pierwszej osoby 
                     foreach(Osobnik o in currentPop[j,i]) // po zarazonych osobnikach 
                     {
                         if(o.isSick())
                         {
-                            for (int k = 0; k < MainWindow.maxMeet && k < currentPop[j, i].Count ;k++ ) /// po kandydatach na zarazenie 
+                            for (int k = 0; (k < MainWindow.maxMeet || MainWindow.maxMeet ==0)  && k < currentPop[j, i].Count ;k++ ) /// po kandydatach na zarazenie 
                             {
                                 if (currentPop[j, i][k]!= o && !currentPop[j, i][k].isSick() && currentPop[j, i][k].canGetSick())
                                 {
                                     double chance = r.NextDouble();
                                     if (chance <= this.infectChance)
                                     {
-                                        currentPop[j, i][k].getSick();
+                                        //currentPop[j, i][k].getSick();
+                                        xyk tmp;
+                                        tmp.x = j;
+                                        tmp.y = i;
+                                        tmp.k = k;
                                         this.sick++;
                                         this.heatly--;
+                                        allList.Add(tmp);
                                         break; // tylko jeden moze zarazic tylko jednego 
                                     }
 
@@ -138,6 +156,10 @@ namespace epidemia
                         }
                     }
                 }
+            }
+            foreach (xyk a in allList)
+            {
+                this.currentPop[a.x, a.y][a.k].canGetSick();
             }
         }
 
@@ -155,7 +177,7 @@ namespace epidemia
                         {
                             //Parallel.ForEach(currentPop[j, i], target =>
                             //foreach(Osobnik target in currentPop[j, i]) // po celach 
-                            for (int k = 0; k < MainWindow.maxMeet && k < currentPop[j, i].Count; k++) /// po kandydatach na zarazenie 
+                            for (int k = 0; (k < MainWindow.maxMeet || MainWindow.maxMeet == 0) && k < currentPop[j, i].Count / 2; k++) /// po kandydatach na zarazenie 
                             {
                                 if (!currentPop[j, i][k].isSick())
                                 {
@@ -167,6 +189,7 @@ namespace epidemia
                                         this.heatly++;
                                         allList.Add(a);
                                         break;
+                                        
                                     }
                                 }
                             }
@@ -178,7 +201,6 @@ namespace epidemia
             foreach(Osobnik o in allList)
             {
                 addToList(o);
-                //o.wyswietl(c);
             }
         }
 
@@ -293,6 +315,41 @@ namespace epidemia
             {
                 if (allList[i] != null)
                     currentPop[(int)allList[i].getPosition().X, (int)allList[i].getPosition().Y].Add(allList[i]);
+            }
+        }
+
+        public void executeSick()
+        {
+            List<xyk> allList = new List<xyk>();
+            List<Osobnik> allList2 = new List<Osobnik>();
+            for (int i = 0; i * MainWindow.osobnikSize < MainWindow.canvasSizeY; i++) ///Y 
+            {
+                for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
+                {
+                    //foreach(Osobnik o in currentPop[j,i]) // po zarazonych osobnikach 
+                    for (int k = 0; k < currentPop[j, i].Count; k++ )
+                    {
+                        if (currentPop[j, i][k].isSick())
+                        {
+                            //System.Console.WriteLine(currentPop[j, i][k].getAge());
+                            if (currentPop[j, i][k].survived() == this.sicknessTime && sicknessTime != 0) //jesli za dlugo chory 
+                            {
+                                xyk tmp;
+                                tmp.x = j;
+                                tmp.y = i;
+                                tmp.k = k;
+                                this.sick--;
+                                this.alive--;
+                                this.dead++;
+                                allList2.Add(currentPop[j, i][k]);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (Osobnik o in allList2)
+            {
+                this.currentPop[(int)o.getPosition().X, (int)o.getPosition().Y].Remove(o);
             }
         }
     }

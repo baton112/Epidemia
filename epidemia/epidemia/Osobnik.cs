@@ -20,6 +20,8 @@ namespace epidemia
         private Point position;
         public Direction direction;
         int age;
+        int wasInfected;
+
         
         public Osobnik( Osobnik o )
         {
@@ -117,7 +119,6 @@ namespace epidemia
         public Point getPosition()
         {
             Point tmp = new Point(this.position.X / MainWindow.osobnikSize, this.position.Y /MainWindow.osobnikSize);
-
             return tmp;
         }
 
@@ -134,8 +135,13 @@ namespace epidemia
         public void getSick()
         {
             this.condition = State.chory;
+            this.wasInfected = this.age;
         }
 
+        public int survived()
+        {
+            return this.age - this.wasInfected;
+        }
 
     }
 }

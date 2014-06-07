@@ -22,7 +22,7 @@ namespace epidemia
         public static int populationGrigSize = 50;
         public static int canvasSizeX = osobnikSize * populationGrigSize; // rozmiar canvas X
         public static int canvasSizeY = osobnikSize * populationGrigSize; // rozmiar canvas Y
-        public static int maxMeet = 2; 
+        public static int maxMeet = 5;  // zero oznacza brak ograniczenia 
   
         public MainWindow()
         {
@@ -48,7 +48,8 @@ namespace epidemia
                 people.changeMoveMethod((bool)checkBox.IsChecked);
                 people.changeDirectionChance = Convert.ToDouble(changeDirectionChance.Text);
                 people.infectChance = Convert.ToDouble(infectChance.Text);
-                people.babyChance = Convert.ToDouble(babyChance.Text);  
+                people.babyChance = Convert.ToDouble(babyChance.Text);
+                people.sicknessTime = Convert.ToInt32(sicknessTime.Text);
             }
             catch(FormatException)
             {
@@ -61,6 +62,7 @@ namespace epidemia
         {
             this.people.newMove();
             this.people.getSick();
+            this.people.executeSick();
             this.people.makeBabies(canvas);
             this.people.newDisplay(canvas);
             StatBarItem.Content = "Przesunieto";
@@ -78,6 +80,7 @@ namespace epidemia
                 {
                     this.people.newMove();
                     this.people.getSick();
+                    this.people.executeSick();
                     this.people.makeBabies(canvas);
                     this.people.newDisplay(canvas);
                 }
@@ -184,6 +187,21 @@ namespace epidemia
                 StatBarItem.Content = "Zły format max spodkan ";
             };
 
+        }
+
+        private void sicknessTime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int time;
+                time = Convert.ToInt32(sicknessTime.Text);
+                StatBarItem.Content = "Zmieniono czas choroby";
+                if(people!= null) this.people.sicknessTime = time;
+            }
+            catch (FormatException)
+            {
+                StatBarItem.Content = "Zły format czasu choroby ";
+            };
         }
 
     }
