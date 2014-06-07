@@ -22,13 +22,13 @@ namespace epidemia
         int age;
         int wasInfected;
 
-        
         public Osobnik( Osobnik o )
         {
             this.condition = o.condition;
             this.position = o.position;
             this.direction = o.direction;
             this.age = o.age;
+            this.wasInfected = o.wasInfected;
         }
         public Osobnik(int x, int y, int rand)
         {
@@ -135,12 +135,18 @@ namespace epidemia
         public void getSick()
         {
             this.condition = State.chory;
-            this.wasInfected = this.age;
+            this.wasInfected = getAge();
+            //System.Console.WriteLine("INFECTED " + wasInfected);
         }
 
         public int survived()
         {
-            return this.age - this.wasInfected;
+            return getAge() - GetInfected();
+        }
+
+        public int GetInfected()
+        {
+            return this.wasInfected;
         }
 
     }

@@ -319,7 +319,8 @@ namespace epidemia
 
         private bool toDie(Osobnik o)
         {
-            if (o.isSick() && sicknessTime <= o.survived())
+           // System.Console.WriteLine("age " + o.getAge() + "inf " + o.GetInfected() +"sur " +o.survived() + "sick "+o.isSick());
+            if (o.isSick() && sicknessTime == o.survived())
               return true; 
             else 
             return false ;
@@ -341,8 +342,8 @@ namespace epidemia
             this.alive -= sssss;
             this.dead += sssss;
             this.sick -= sssss;
-
-            System.Console.WriteLine("usunieto" + sssss);
+          
+            System.Console.WriteLine("umarlo" + sssss);
         }
     }
 }
