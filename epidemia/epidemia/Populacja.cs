@@ -64,7 +64,7 @@ namespace epidemia
                 {
                     for (int j = 0; j * MainWindow.osobnikSize < MainWindow.canvasSizeX; j++) ///X 
                     {
-                        currentPop[j, i].Add(new Osobnik(j, i, r.Next(4)));
+                        currentPop[j, i].Add(new Osobnik(j, i, r.Next(4),r.Next(-2,2)));
                         this.alive += 1;
                         if (alive == size) break; 
                     }
@@ -183,7 +183,7 @@ namespace epidemia
                                     double chance = r.NextDouble();
                                     if (chance <= babyChance)
                                     {
-                                        Osobnik a = new Osobnik((int)o.getPosition().X, (int)o.getPosition().Y, (int)r.Next(4), o.getAge());
+                                        Osobnik a = new Osobnik((int)o.getPosition().X, (int)o.getPosition().Y, (int)r.Next(4), o.getAge(),r.Next(-2,2));
                                         this.alive++;
                                         this.heatly++;
                                         allList.Add(a);
@@ -320,7 +320,9 @@ namespace epidemia
         private bool toDie(Osobnik o)
         {
            // System.Console.WriteLine("age " + o.getAge() + "inf " + o.GetInfected() +"sur " +o.survived() + "sick "+o.isSick());
-            if (o.isSick() && sicknessTime == o.survived())
+            
+            if (o.isSick() && (sicknessTime == o.survived()))
+          
               return true; 
             else 
             return false ;

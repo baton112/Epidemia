@@ -18,7 +18,7 @@
         <Label Content="Chorych" HorizontalAlignment="Left" Margin="486,384,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Content="Umarlo" HorizontalAlignment="Left" Margin="486,415,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Content="Szansa zararzenia" HorizontalAlignment="Left" Margin="486,97,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBox Name="infectChance" HorizontalAlignment="Left" Height="23" Margin="637,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0.5" TextChanged="infectChance_TextChanged"/>
+        <TextBox Name="infectChance" HorizontalAlignment="Left" Height="23" Margin="651,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0.5" TextChanged="infectChance_TextChanged"/>
         <Label Name="healthyNumber" Content="Label" HorizontalAlignment="Left" Margin="589,353,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Name="sickNumber" Content="Label" HorizontalAlignment="Left" Margin="589,384,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Name="deathNumber" Content="Label" HorizontalAlignment="Left" Margin="589,415,0,0" VerticalAlignment="Top" Width="107"/>
@@ -26,18 +26,18 @@
         <Label Name="aliveNumber" Content="Label" HorizontalAlignment="Left" Margin="589,322,0,0" VerticalAlignment="Top" Width="107"/>
         <CheckBox Name="checkBox" Margin="486,192,33.6,268" RenderTransformOrigin="1.511,0.462" Content="Utrzymuj kierunek przemieszczania" Checked="checkBox_Checked" Unchecked="checkBox_Checked" IsChecked="False" IsThreeState="False"/>
         <Label Content="Szansa zmiany kierunku" HorizontalAlignment="Left" Margin="486,221,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="changeDirectionChance" HorizontalAlignment="Left" Height="23" Margin="637,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Text="0.5" TextChanged="changeDirectionChance_TextChanged"/>
+        <TextBox Name="changeDirectionChance" HorizontalAlignment="Left" Height="23" Margin="651,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Text="0.5" TextChanged="changeDirectionChance_TextChanged"/>
         <Label Content="Epoka" HorizontalAlignment="Left" Margin="486,296,0,0" VerticalAlignment="Top" Width="98"/>
         <Label Name="currentEpochNumber" Content="Label" HorizontalAlignment="Left" Margin="589,296,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Content="Szansa rozmnozenia" HorizontalAlignment="Left" Margin="486,160,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBox Name="babyChance" HorizontalAlignment="Left" Height="23" Margin="637,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0.05" TextChanged="babyChance_TextChanged"/>
+        <TextBox Name="babyChance" HorizontalAlignment="Left" Height="23" Margin="651,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0.05" TextChanged="babyChance_TextChanged"/>
         <Label Content="Maks spodkanych " HorizontalAlignment="Left" Margin="486,247,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="maxMeetTextBox" HorizontalAlignment="Left" Height="23" Margin="637,251,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" TextChanged="maxMeet_TextChanged"/>
+        <TextBox Name="maxMeetTextBox" HorizontalAlignment="Left" Height="23" Margin="651,250,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" TextChanged="maxMeet_TextChanged"/>
         <Label Content="Chorych" HorizontalAlignment="Left" Margin="486,273,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="newSickTextBox" HorizontalAlignment="Left" Height="23" Margin="637,273,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="newSickTextBox" HorizontalAlignment="Left" Height="23" Margin="651,273,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" />
         <Button Content="Zaraź" HorizontalAlignment="Left" Margin="676,307,0,0" VerticalAlignment="Top" Width="108" Click="Button_Click_AddSick"/>
-        <Label Content="Czas zycia zarazonego" HorizontalAlignment="Left" Margin="487,123,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBox x:Name="sicknessTime" HorizontalAlignment="Left" Height="23" Margin="637,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="10" TextChanged="sicknessTime_TextChanged"/>
+        <Label Content="Czas zycia zarazonego +/-2" HorizontalAlignment="Left" Margin="487,123,0,0" VerticalAlignment="Top" Width="159"/>
+        <TextBox x:Name="sicknessTime" HorizontalAlignment="Left" Height="23" Margin="651,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="10" TextChanged="sicknessTime_TextChanged"/>
 
     </Grid>
 </Window>

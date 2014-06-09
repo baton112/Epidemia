@@ -21,6 +21,8 @@ namespace epidemia
         public Direction direction;
         int age;
         int wasInfected;
+        int randLifeTime;
+        Random r;
 
         public Osobnik( Osobnik o )
         {
@@ -29,22 +31,26 @@ namespace epidemia
             this.direction = o.direction;
             this.age = o.age;
             this.wasInfected = o.wasInfected;
+         //   this.r = new Random();
+            this.randLifeTime = o.randLifeTime;
         }
-        public Osobnik(int x, int y, int rand)
+        public Osobnik(int x, int y, int rand, int rand2)
         {
             this.condition = State.zdrowy;
             this.position.X = x*MainWindow.osobnikSize;
             this.position.Y = y*MainWindow.osobnikSize;
             this.direction = (Direction) rand;
-            this.age = 0; 
+            this.age = 0;
+            this.randLifeTime = rand2;
         }
-        public Osobnik(int x, int y, int rand, int age)
+        public Osobnik(int x, int y, int rand, int age, int rand2)
         {
             this.condition = State.zdrowy;
             this.position.X = x*MainWindow.osobnikSize;
             this.position.Y = y*MainWindow.osobnikSize;
             this.direction = (Direction)rand;
             this.age = age;
+            this.randLifeTime = rand2;
         }
         
         public Boolean isSick() // true if sick, flase if healthy 
@@ -136,12 +142,12 @@ namespace epidemia
         {
             this.condition = State.chory;
             this.wasInfected = getAge();
-            //System.Console.WriteLine("INFECTED " + wasInfected);
+
         }
 
         public int survived()
         {
-            return getAge() - GetInfected();
+            return ((getAge() + this.randLifeTime) - GetInfected());
         }
 
         public int GetInfected()
