@@ -155,5 +155,9 @@ namespace epidemia
             return this.wasInfected;
         }
 
+        public void setCondition(State condition){
+            this.condition = condition;
+        }
+
     }
 }

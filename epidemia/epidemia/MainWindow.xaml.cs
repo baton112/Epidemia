@@ -50,6 +50,7 @@ namespace epidemia
                 people.infectChance = Convert.ToDouble(infectChance.Text);
                 people.babyChance = Convert.ToDouble(babyChance.Text);
                 people.sicknessTime = Convert.ToInt32(sicknessTime.Text);
+                people.chanceToLive = Convert.ToDouble(chanceToLive.Text);
             }
             catch(FormatException)
             {

@@ -37,10 +37,12 @@ namespace epidemia
         public int dead;
         public double infectChance;
         public double babyChance;
+        public double chanceToLive;
         bool radomMovment; // true poruszamy dalej w tym samym kierunku
         public double changeDirectionChance;
         public int currentyear;
         public int sicknessTime; // 0 - nieskonczona choroba .. nikt nie umeira
+        public Random r;
 
         public populacja(int size, double chance, bool randomMove)
         {
@@ -55,7 +57,7 @@ namespace epidemia
                 }
             }
 
-            Random r = new Random();
+            this.r = new Random();
             this.alive = 0;
             //tworzy osobnikowpopulacji 
             while (alive < size)
@@ -320,12 +322,22 @@ namespace epidemia
         private bool toDie(Osobnik o)
         {
            // System.Console.WriteLine("age " + o.getAge() + "inf " + o.GetInfected() +"sur " +o.survived() + "sick "+o.isSick());
-            
+
             if (o.isSick() && (sicknessTime == o.survived()))
-          
-              return true; 
-            else 
-            return false ;
+            {
+                if(r.NextDouble()>this.chanceToLive)
+                    return true;
+                else
+                {
+                    o.setCondition(State.wyzdrowial);
+                    this.sick--;
+                    this.heatly++;
+                    System.Console.WriteLine("UZDROWIENIE");
+                    return false;
+                }
+            }
+            else
+                return false;
         }
 
         public void executeSick()
